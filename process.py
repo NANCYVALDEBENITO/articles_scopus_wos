@@ -62,16 +62,21 @@ enter.send_keys(1)
 enter = driver.find_element_by_id('markTo')
 enter.send_keys(243)
 
-enter = driver.find_elements_by_xpath('//span[contains(@class, "select2") and contains(@class, "select2-container") and contains(@class, "select2-container--default") and contains(@class,"select2-container--below") and contains(@class,"select2-container--focus") and contains(@class,"select2-container--open")]')
+#option for register content
+enter = driver.find_elements_by_xpath('//span[contains(@class, "select2") and contains(@class, "select2-container") and contains(@class, "select2-container--default") and contains(@class,"select2-container--focus")]')
 enter = driver.find_elements_by_xpath('//span[contains(@class,"select2-selection") and contains(@class,"select2-selection--single")]')
 enter = driver.find_element_by_xpath('//option[contains(@value,"HIGHLY_CITED HOT_PAPER OPEN_ACCESS PMID USAGEIND AUTHORSIDENTIFIERS ACCESSION_NUM FUNDING SUBJECT_CATEGORY JCR_CATEGORY LANG IDS PAGEC SABBR CITREFC ISSN PUBINFO KEYWORDS CITTIMES ADDRS CONFERENCE_SPONSORS DOCTYPE CITREF ABSTRACT CONFERENCE_INFO SOURCE TITLE AUTHORS  ")]')
-#enter = driver.find_element_by_id('select2-bib_fields-result-k0wy-HIGHLY_CITED HOT_PAPER OPEN_ACCESS PMID USAGEIND AUTHORSIDENTIFIERS ACCESSION_NUM FUNDING SUBJECT_CATEGORY JCR_CATEGORY LANG IDS PAGEC SABBR CITREFC ISSN PUBINFO KEYWORDS CITTIMES ADDRS CONFERENCE_SPONSORS DOCTYPE CITREF ABSTRACT CONFERENCE_INFO SOURCE TITLE AUTHORS  ')
 enter.click()
 
-#enter = driver.find_element_by_xpath('//span[contains(@class,"select2-selection") and contains(@class,"select2-selection--single")]')
+#option format file
 
-#enter = driver.find_element_by_id('select2-saveOptions-result-qs3k-tabWinUTF8')
-#enter.click()
+enter = driver.find_elements_by_xpath('//span[contains(@class, "select2") and contains(@class, "select2-container") and contains(@class, "select2-container--default") and contains(@class,"select2-container--below") and contains(@class,"select2-container--focus") and contains(@class,"select2-container--open")]')
+enter = driver.find_elements_by_xpath('//span[contains(@class,"select2-selection") and contains(@class,"select2-selection--single")]')
+enter = driver.find_elements_by_xpath('//span[contains(@class,"select2-results__option select2-results__option--highlighted")]')
+enter = driver.find_element_by_xpath('//option[contains(@value,"tabWinUTF8")]')
+enter.click()
 
-#enter = driver.find_element_by_id('select2-saveToMenu-result-veek-other')
+
+#enter = driver.find_element_by_xpath('//button[contains(@class,"standard-button") and contains(@class,primary-button)]')
+#enter = driver.find_element_by_xpath('//button[contains(@title,"Enviar")]')
 #enter.click()
