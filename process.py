@@ -77,6 +77,7 @@ enter = driver.find_element_by_xpath('//option[contains(@value,"tabWinUTF8")]')
 enter.click()
 
 
-#enter = driver.find_element_by_xpath('//button[contains(@class,"standard-button") and contains(@class,primary-button)]')
-#enter = driver.find_element_by_xpath('//button[contains(@title,"Enviar")]')
-#enter.click()
+enter = driver.find_element_by_xpath('//div[contains(@class,"quickoutput-overlay-buttonset")]')
+enter = driver.find_element_by_xpath('//span[contains(@class,"quickoutput-action")]')
+enter = driver.find_element_by_xpath('//button[contains(@class,"standard-button") and contains(@class,primary-button) and contains(@title,"Enviar")]')
+enter.click()
