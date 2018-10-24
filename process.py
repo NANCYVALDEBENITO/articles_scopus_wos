@@ -9,6 +9,10 @@ import matplotlib.pyplot as plt
 import os 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 
 #open dataframe DOI
 df = pd.read_csv("/home/nvaldebenito/Documentos/20_articles_process/cr2_articles.csv", sep='\t', encoding='utf-8')
@@ -33,8 +37,8 @@ print(DOI_WEBOFS)
 user_webofs		=str(input("Write your email in Web of Science, please between inverted commas: "))
 password_webofs	=str(input("Write your password, please between inverted commas: "))
 
-#user_scopus=input("Write your email in Scopus, please between inverted commas : ")
-#password_scopus=input("Write your password, please between inverted commas: ")
+user_scopus=input("Write your email in Scopus, please between inverted commas : ")
+password_scopus=input("Write your password, please between inverted commas: ")
 
 #Affiliations with Web of Science
 driver = webdriver.Chrome(executable_path="/usr/bin/chromedriver")
@@ -67,9 +71,23 @@ enter = driver.find_element_by_xpath('//input[contains(@type, "password") and co
 enter.send_keys(password_webofs)
 
 #click enter 
+enter = driver.find_elements_by_xpath('//td[contains(@class,"csi-button")]')
+enter = driver.find_element_by_xpath('//button[contains(@id,"signInButton")]')
+enter.click()
 
 
+delay = 50 # seconds
 
+WebDriverWait(driver, delay).until(EC.element_to_be_clickable((By.XPATH, '//a[contains(@title,"Nancy") and contains(@class,"nav-link")]')))
+
+
+#advanced
+search = driver.find_elements_by_xpath('//div[contains(@class,"block-search") and contains(@class,"block-search-header")]')
+search = driver.find_elements_by_xpath('//li[contains(@class,"searchtype-sub-nav")]')
+search = driver.find_elements_by_xpath('//ul[contains(@class,"searchtype-nav")]')
+search = driver.find_elements_by_xpath('//li[contains(@class,"searchtype-sub-nav__list-item")]')
+search = driver.find_element_by_xpath('//a[contains(@title,"Use la búsqueda avanzada para restringir los resultados a unos criterios específicos")]')
+search.click()
 #add DOI
 button = driver.find_element_by_id('value(input1)')
 button.send_keys(DOI_WEBOFS)
@@ -78,18 +96,20 @@ button.send_keys(DOI_WEBOFS)
 enter = driver.find_element_by_id('search-button')
 enter.click()
 
-#npub  = len(driver.find_elements_by_xpath('/summary.do?product=WOS&amp;doc=1&amp;qid=21&amp;SID=7CWt7eMDxKOrXhHC3cS&amp;search_mode=AdvancedSearch&amp;update_back2search_link_param=yes'))
-#print(npub)
 
 #click in number of publications found
-enter = driver.find_element_by_id('set_4_div')
+enter = driver.find_elements_by_xpath('//div[contains(@class,"historyResults")]')
+enter = driver.find_element_by_xpath('//a[contains(@title,"Hacer clic para ver los resultados")]')
 enter.click()
 
 #enter = driver.find_element_by_class_name('select2-selection__arrow')
 #enter.click()
 
 #save in other files format 
-enter = driver.find_element_by_id('select2-saveToMenu-container')
+enter = driver.find_elements_by_xpath('//div[contains(@style,"display:inline-block")]')
+enter = driver.find_elements_by_xpath('//span[contains(@class,"saveToButton")]')
+enter = driver.find_element_by_xpath('//select[contains(@aria-label,"Opciones de formato para guardar resultados")]')
+enter = driver.find_element_by_xpath('//option[contains(@title,"Guardar en otros formatos de archivo")]')
 enter.click()
 
 #from number
@@ -118,6 +138,3 @@ enter = driver.find_element_by_xpath('//div[contains(@class,"quickoutput-overlay
 enter = driver.find_element_by_xpath('//span[contains(@class,"quickoutput-action")]')
 enter = driver.find_element_by_xpath('//button[contains(@class,"standard-button") and contains(@class,primary-button) and contains(@title,"Enviar")]')
 enter.click()
-
-#close web page
-driver.find_element_by_xpath('//a[title="close"]')
