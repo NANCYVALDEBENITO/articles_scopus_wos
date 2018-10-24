@@ -40,6 +40,8 @@ password_webofs	=str(input("Write your password, please between inverted commas:
 user_scopus=input("Write your email in Scopus, please between inverted commas : ")
 password_scopus=input("Write your password, please between inverted commas: ")
 
+
+
 #Affiliations with Web of Science
 driver = webdriver.Chrome(executable_path="/usr/bin/chromedriver")
 driver.get("http://apps.webofknowledge.com/WOS_AdvancedSearch_input.do?SID=7CWt7eMDxKOrXhHC3cS&product=WOS&search_mode=AdvancedSearch")
@@ -96,6 +98,10 @@ button.send_keys(DOI_WEBOFS)
 enter = driver.find_element_by_id('search-button')
 enter.click()
 
+number = driver.find_elements_by_xpath('//div[contains(@class,"historyResults")]')
+number = driver.find_elements_by_xpath('//a[contains(@title,"Hacer clic para ver los resultados")]')[0].text
+print(number)
+
 
 #click in number of publications found
 enter = driver.find_elements_by_xpath('//div[contains(@class,"historyResults")]')
@@ -118,7 +124,7 @@ enter.send_keys(1)
 
 #to number
 enter = driver.find_element_by_id('markTo')
-enter.send_keys(243)
+enter.send_keys(number)
 
 #option for register content
 enter = driver.find_elements_by_xpath('//span[contains(@class, "select2") and contains(@class, "select2-container") and contains(@class, "select2-container--default") and contains(@class,"select2-container--focus")]')
@@ -138,3 +144,12 @@ enter = driver.find_element_by_xpath('//div[contains(@class,"quickoutput-overlay
 enter = driver.find_element_by_xpath('//span[contains(@class,"quickoutput-action")]')
 enter = driver.find_element_by_xpath('//button[contains(@class,"standard-button") and contains(@class,primary-button) and contains(@title,"Enviar")]')
 enter.click()
+
+#close
+close = driver.find_elements_by_xpath('//div[contains(@class,"ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-dialog-quickoutput qoOther")]')
+close = driver.find_elements_by_xpath('//div[contains(@id,"ui-id-8")]')
+close = driver.find_elements_by_xpath('//div[contains(@class,"quickoutput-overlay-buttonset")]')
+close = driver.find_element_by_xpath('//a[contains(@class,"quickoutput-cancel-action") and contains(@href,"#")]')
+close.click()
+
+print("Download availaible /home/nvaldebenito/Descargas/ savedrecs.txt")
