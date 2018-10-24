@@ -8,6 +8,7 @@ import operator
 import matplotlib.pyplot as plt
 import os 
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 
 #open dataframe DOI
 df = pd.read_csv("/home/nvaldebenito/Documentos/20_articles_process/cr2_articles.csv", sep='\t', encoding='utf-8')
@@ -29,8 +30,45 @@ DOI_WEBOFS=" OR".join(DOI_WEBOFS)
 
 print(DOI_WEBOFS)
 
+user_webofs		=str(input("Write your email in Web of Science, please between inverted commas: "))
+password_webofs	=str(input("Write your password, please between inverted commas: "))
+
+#user_scopus=input("Write your email in Scopus, please between inverted commas : ")
+#password_scopus=input("Write your password, please between inverted commas: ")
+
+#Affiliations with Web of Science
 driver = webdriver.Chrome(executable_path="/usr/bin/chromedriver")
 driver.get("http://apps.webofknowledge.com/WOS_AdvancedSearch_input.do?SID=7CWt7eMDxKOrXhHC3cS&product=WOS&search_mode=AdvancedSearch")
+
+#click item add user and password
+enter = driver.find_elements_by_xpath('//div[contains(@class, "navBar") and contains(@class,"clearfix")]')
+enter = driver.find_elements_by_xpath('//ul[contains(@class, "UserCabinet") and contains(@class,"nav-list")]')
+enter = driver.find_elements_by_xpath('//li[contains(@class, "nav-item")]')
+enter = driver.find_elements_by_xpath('//li[contains(@class, "nav-item") and contains(@class,"show-subnav")]')
+enter = driver.find_element_by_xpath('//a[contains(@title, "Iniciar sesión") and contains(@class,"nav-link") and contains(@id,"signin")]')
+enter.click()
+
+#sign in
+enter = driver.find_element_by_xpath('//ul[contains(@class, "subnav")]')
+enter = driver.find_element_by_xpath('//li[contains(@class, "subnav-item")]')
+enter = driver.find_element_by_xpath('//a[contains(@class, "subnav-link") and contains(@class,"snowplow-header-signin")]')
+enter.click()
+
+#add user
+enter = driver.find_elements_by_xpath('//td[contains(@width, "50%") and contains(@class,"csi-left-column")]')
+enter = driver.find_elements_by_xpath('//td[contains(@align, "left") and contains(@class,"csi-login-input")]')
+enter = driver.find_element_by_id('email')
+enter.send_keys(user_webofs)
+
+#add password
+enter = driver.find_elements_by_xpath('//td[contains(@width, "50%") and contains(@class,"csi-left-column")]')
+enter = driver.find_elements_by_xpath('//td[contains(@align, "left") and contains(@class,"csi-login-input")]')
+enter = driver.find_element_by_xpath('//input[contains(@type, "password") and contains(@name,"password") and contains(@id,"password")]')
+enter.send_keys(password_webofs)
+
+#click enter 
+
+
 
 #add DOI
 button = driver.find_element_by_id('value(input1)')
@@ -69,15 +107,17 @@ enter = driver.find_element_by_xpath('//option[contains(@value,"HIGHLY_CITED HOT
 enter.click()
 
 #option format file
-
 enter = driver.find_elements_by_xpath('//span[contains(@class, "select2") and contains(@class, "select2-container") and contains(@class, "select2-container--default") and contains(@class,"select2-container--below") and contains(@class,"select2-container--focus") and contains(@class,"select2-container--open")]')
 enter = driver.find_elements_by_xpath('//span[contains(@class,"select2-selection") and contains(@class,"select2-selection--single")]')
 enter = driver.find_elements_by_xpath('//span[contains(@class,"select2-results__option select2-results__option--highlighted")]')
 enter = driver.find_element_by_xpath('//option[contains(@value,"tabWinUTF8")]')
 enter.click()
 
-
+#download csv affiliations
 enter = driver.find_element_by_xpath('//div[contains(@class,"quickoutput-overlay-buttonset")]')
 enter = driver.find_element_by_xpath('//span[contains(@class,"quickoutput-action")]')
 enter = driver.find_element_by_xpath('//button[contains(@class,"standard-button") and contains(@class,primary-button) and contains(@title,"Enviar")]')
 enter.click()
+
+#close web page
+driver.find_element_by_xpath('//a[title="close"]')
