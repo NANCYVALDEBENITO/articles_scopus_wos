@@ -46,12 +46,9 @@ DOI_SCOPUS="".join(DOI_SCOPUS)
 DOI_WEBOFS=" OR".join(DOI_WEBOFS)
 
 #print(DOI_WEBOFS)
+user_webofs=""
+password_webofs=""
 
-#user_webofs		=str(input("Write your email in Web of Science, please between inverted commas: "))
-#password_webofs	=str(input("Write your password, please between inverted commas: "))
-
-#user_scopus=input("Write your email in Scopus, please between inverted commas : ")
-#password_scopus=input("Write your password, please between inverted commas: ")
 
 
 
